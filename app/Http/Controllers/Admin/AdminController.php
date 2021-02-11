@@ -13,7 +13,9 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.admin_dashboard');
+        $adminDetails = Auth::guard('admin')->user();
+
+        return view('admin.admin_dashboard', compact('adminDetails'));
     }
 
     public function settings(Request $request)
@@ -27,23 +29,65 @@ class AdminController extends Controller
         return view('admin.admin_settings', compact('adminDetails'));
     }
 
-    public function updatePassword(Request $request)
+    public function updateCurrentPassword(Request $request)
     {
         $adminDetails = Auth::guard('admin')->user();
         //dd($adminDetails->toArray());
         if ($request->isMethod('post')) {
             $data = $request->all();
+            // print_r($data); die;
+            // Check if current password is correct
+            if (Hash::check($data['admin_current_pwd'], $adminDetails->password)) {
+                // Check if new and confirm password is matching
+                if ($data['admin_new_pwd'] == $data['admin_confirm_pwd']) {
+                    // Update new password in database
+                    Admin::where('id', $adminDetails->id)->update(['password' => bcrypt($data['admin_new_pwd'])]);
+
+                    Session::flash('success_message','Şifre başarıyla değiştirildi.');
+                    //return redirect(route('admin.settings'))->with('status', 'Şifre başarıyla değiştirildi.');
+                    return redirect(route('admin.settings'));
+                } else {
+
+
+                    Session::flash('error_message', 'Parola doğrulaması doğru değil.');
+                    //return redirect()->back()->with('error_message','Mevcut parola geçerli değildir.');
+                    return redirect()->back();
+                }
+
+            } else {
+                Session::flash('error_message', 'Mevcut parola geçerli değildir.');
+                return redirect()->back();
+            }
         }
 
         return view('admin.admin_settings', compact('adminDetails'));
     }
 
-    public function chkCurrentPassword(Request $request)
+    public function checkConfirmPassword(Request $request)
     {
         $data = $request->all();
-        $adminPassword = Auth::guard('admin')->user()->password;
+        //echo '<pre>'; print_r($data); die;
+        if ($data['admin_new_pwd'] === $data['admin_confirm_pwd']) {
+            /*
+            $data['isTrue'] = "true";
+            echo json_encode($data);
+            */
+            echo "true";
+        } else {
+            /*
+            $data['isTrue'] = "false";
+            echo json_encode($data);
+            */
+            echo "false";
+        }
+    }
 
-        if (Hash::check($data['current_pwd'], $adminPassword)) {
+    public function checkCurrentPassword(Request $request)
+    {
+        $adminDetails = Auth::guard('admin')->user();
+        $data = $request->all();
+        //echo '<pre>'; print_r($data); die;
+        if (Hash::check($data['admin_current_pwd'], $adminDetails->password)) {
             /*
             $data['isTrue'] = "true";
             echo json_encode($data);

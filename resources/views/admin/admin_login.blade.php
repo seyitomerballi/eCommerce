@@ -20,7 +20,7 @@
                         </div>
                     @endif
 
-                    <form action="{{route('admin.login')}}" method="post" autocomplete="off">
+                    <form action="{{route('admin.login')}}" method="post">
 
                         @csrf
                         <div class="form-group">

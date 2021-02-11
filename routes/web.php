@@ -25,12 +25,38 @@ Route::get('/dashboard', function () {
 Route::prefix('/admin')->namespace('Admin')->group(function () {
     // All the admin routes will be defined here.
     Route::match(['get', 'post'], '/', [AdminController::class, 'login'])->name('admin.login');
-    Route::middleware(['admin'])->group(function (){
-        Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-        Route::get('settings', [AdminController::class, 'settings'])->name('admin.settings');
-        Route::get('logout', [AdminController::class, 'logout'])->name('admin.logout');
-        Route::post('check-current-pwd',[AdminController::class,'chkCurrentPassword'])->name('admin.chkCurrentPassword');
+
+    // ADMIN MIDDLEWARE
+    Route::middleware(['admin'])->group(function () {
+        Route::get(
+            'dashboard',
+            [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get(
+            'settings',
+            [AdminController::class, 'settings'])->name('admin.settings');
+        Route::get(
+            'logout',
+            [AdminController::class, 'logout'])->name('admin.logout');
+
+        //  CHECK DATA AND AJAX
+        Route::post(
+            'check-current-pwd',
+            [AdminController::class, 'checkCurrentPassword'])->name('admin.checkCurrentPassword');
+        Route::post(
+            'check-confirm-pwd',
+            [AdminController::class, 'checkConfirmPassword'])->name('admin.checkConfirmPassword');
+        //  end CHECK DATA AND AJAX
+
+        Route::post(
+            'update-current-pwd',
+            [AdminController::class, 'updateCurrentPassword'])->name('admin.updateCurrentPassword');
+
+        Route::match(
+            ['get', 'post'],
+            'update-admin-details',
+            [AdminController::class, 'updateAdminDetails'])->name('admin.updateAdminDetails');
     });
+    // END ADMIN MIDDLEWARE
     /*  Route::group(['middleware' => ['admin']], function () {
         Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     });    */

@@ -27,6 +27,10 @@
 <script src=" {{ asset('plugins/summernote/summernote-bs4.min.js')}}"></script>
 <!-- overlayScrollbars -->
 <script src=" {{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
+<!-- SweetAlert2 -->
+<script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+<!-- Toastr -->
+<script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src=" {{ asset('js/admin_js/adminlte.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -35,3 +39,19 @@
 <script src=" {{ asset('js/admin_js/demo.js')}}"></script>
 <!-- Custom Admin Scripts -->
 <script src=" {{ asset('js/admin_js/admin_script.js')}}"></script>
+<!-- Success and error Alerts-->
+<script>
+    @if(Session::has('success_message'))
+        toastr.success({{ Session::get('success_message') }});
+        @php
+            Session::forget('success_message');
+        @endphp
+    @endif
+    @if(Session::has('error_message'))
+        toastr.success({{ Session::get('error_message') }});
+        @php
+            Session::forget('error_message');
+        @endphp
+    @endif
+</script>
+<!-- /.Success and error Alerts-->

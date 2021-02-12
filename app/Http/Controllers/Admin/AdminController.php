@@ -35,6 +35,8 @@ class AdminController extends Controller
         $adminDetails = Auth::guard('admin')->user();
         if ($request->isMethod('post')) {
             // Validation with laravel validate and AJAX
+            $data = $request->all();
+            //dd($data);
             /*
              $validator = Validator::make($request->all(), [
                  'admin_name' => 'required|alpha',
@@ -50,8 +52,11 @@ class AdminController extends Controller
             //dd($validator->errors());
             // end of Validation with laravel validate
 
-            // Update datas
-
+            // Update Admin Details
+            Admin::where('email', $adminDetails->email)
+                ->update(['name' => $data['admin_name'], 'mobile' => $data['admin_phone']]);
+            session::flash('success_message_details', 'Admin detayları başarıyla güncellendi!');
+            return redirect()->back();
             // end Update datas
         }
         return view('admin.admin_settings', compact('adminDetails'));
@@ -71,7 +76,7 @@ class AdminController extends Controller
                     // Update new password in database
                     Admin::where('id', $adminDetails->id)->update(['password' => bcrypt($data['admin_new_pwd'])]);
 
-                    Session::flash('success_message', 'Şifre başarıyla değiştirildi.');
+                    Session::flash('success_message_password', 'Şifre başarıyla değiştirildi.');
                     //return redirect(route('admin.settings'))->with('status', 'Şifre başarıyla değiştirildi.');
                     return redirect(route('admin.settings'));
                 } else {

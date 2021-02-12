@@ -29,13 +29,13 @@
                     <div class="col-xl-6 col-lg-8 col-md-6 col-12">
                         <!-- Success and error Alerts-->
                         <!-- Success Alert -->
-                        @if(Session::has('success_message'))
+                        @if(Session::has('success_message_password'))
                             <div class="alert alert-success alert-dismissible">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                 <h5><i class="icon fas fa-check"></i>Başarılı!</h5>
-                                {{ Session::get('success_message') }}
+                                {{ Session::get('success_message_password') }}
                                 @php
-                                    Session::forget('success_message');
+                                    Session::forget('success_message_password');
                                 @endphp
                             </div>
                         @endif
@@ -51,9 +51,10 @@
                                 @endphp
                             </div>
                     @endif
+
                     <!-- /.Error Alert -->
                         <!-- /.Success and error Alerts-->
-                        <div class="card card-primary">
+                        <div class="card card-navy">
                             <div class="card-header">
                                 <h3 class="card-title">Parola Güncelle</h3>
                             </div>
@@ -119,13 +120,13 @@
                     <div class="col-xl-6 col-lg-8 col-md-6 col-12">
                         <!-- Success and error Alerts-->
                         <!-- Success Alert -->
-                        @if(Session::has('success_message'))
+                        @if(Session::has('success_message_details'))
                             <div class="alert alert-success alert-dismissible">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                 <h5><i class="icon fas fa-check"></i>Başarılı!</h5>
-                                {{ Session::get('success_message') }}
+                                {{ Session::get('success_message_details') }}
                                 @php
-                                    Session::forget('success_message');
+                                    Session::forget('success_message_details');
                                 @endphp
                             </div>
                         @endif
@@ -143,7 +144,7 @@
                     @endif
                     <!-- /.Error Alert -->
                         <!-- /.Success and error Alerts-->
-                        <div class="card card-primary">
+                        <div class="card card-navy disabled">
                             <div class="card-header">
                                 <h3 class="card-title">Admin Detayları</h3>
                             </div>
@@ -172,20 +173,28 @@
                                                value="{{$adminDetails->name}}"
                                                placeholder="Ad giriniz...">
                                         @if($errors->has('admin_name'))
-                                            <span id="admin_name_err" style="color: red">{{$errors->first('admin_name')}}</span>
-                                        @endif
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Telefon Numarası</label>
-                                        <input name="admin_phone" id="admin_phone" type="text"
-                                               class="form-control @if($errors->has('admin_phone')) is-invalid @endif"
-                                               value="{{$adminDetails->phone}}"
-                                               placeholder="Telefon numarası giriniz...">
-                                        @if($errors->has('admin_phone'))
-                                            <span id="admin_phone_err" style="color: red">{{$errors->first('admin_phone')}}</span>
+                                            <span id="admin_name_err"
+                                                  style="color: red">{{$errors->first('admin_name')}}</span>
                                         @endif
                                     </div>
 
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Telefon Numarası</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                            </div>
+                                            <input name="admin_phone" id="admin_phone" type="text" class="form-control"
+                                                   data-inputmask="&quot;mask&quot;: &quot;(999) 999-9999&quot;"
+                                                   data-mask="" im-insert="true" placeholder="(___) ___-____">
+
+                                        </div>
+                                        <!-- /.input group -->
+                                        @if($errors->has('admin_phone'))
+                                            <span id="admin_phone_err"
+                                                  style="color: red">{{$errors->first('admin_phone')}}</span>
+                                        @endif
+                                    </div>
                                     <div class="form-group">
                                         <label for="admin_image">Image</label>
                                         <div class="input-group">
@@ -219,6 +228,8 @@
             </div><!-- /.container-fluid -->
         </section>
         <!-- /.content -->
+
+
     </div>
     <!-- /.content-wrapper -->
 @endsection

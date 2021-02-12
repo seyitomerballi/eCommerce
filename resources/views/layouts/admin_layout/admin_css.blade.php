@@ -18,3 +18,12 @@
 <link rel="stylesheet" href=" {{ asset('plugins/summernote/summernote-bs4.css')}}">
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+<!-- SweetAlert2 -->
+<link rel="stylesheet" href="{{asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+<!-- Toastr -->
+<link rel="stylesheet" href="{{asset('plugins/toastr/toastr.min.css')}}">
+<!-- SweetAlert2 -->
+<script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+<!-- Toastr -->
+<script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>

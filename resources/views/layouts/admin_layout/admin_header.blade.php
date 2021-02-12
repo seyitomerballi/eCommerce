@@ -8,9 +8,6 @@
         <li class="nav-item d-none d-sm-inline-block">
             <a href="{{route('admin.dashboard')}}" class="nav-link">Home</a>
         </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{route('admin.settings')}}" class="nav-link">Settings</a>
-        </li>
     </ul>
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
@@ -19,6 +16,12 @@
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('admin.settings')}}" role="button">
+                <i class="fas fa-user-cog"></i> Admin Settings
+            </a>
+        </li>
+
     </ul>
 </nav>
 <!-- /.navbar -->

@@ -90,5 +90,8 @@ return array(
       | of "email". This simply helps us make messages a little cleaner.
       |
      */
-    'attributes' => array(),
+    'attributes' => array(
+        "admin_name" => "Admin adı",
+        "admin_phone" => "Telefon numarası"
+    ),
 );

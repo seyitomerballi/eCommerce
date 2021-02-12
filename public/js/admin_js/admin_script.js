@@ -63,3 +63,27 @@ $(document).ready(function () {
         });
     });
 });
+
+/*
+$(document).ready(function () {
+    $("#admin_name, #admin_phone").keyup(function () {
+        var _token = $("input[name='_token']").val();
+        var admin_name = $("#admin_name").val();
+        var admin_phone = $("#admin_phone").val();
+        $.ajax({
+            url: "/admin/update-admin-details",
+            type: 'POST',
+            data: {_token: _token, admin_name: admin_name, admin_phone: admin_phone},
+            success: function (response) {
+                    console.log(response);
+                $('#admin_name_err').text(response.error.admin_name);
+                $('#admin_phone_err').text(response.error.admin_phone);
+                    //alert(data.success);
+            },
+            error: function (response){
+                console.log(response);
+            }
+        });
+    });
+});
+*/

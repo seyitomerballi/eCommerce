@@ -24,8 +24,36 @@ class AdminController extends Controller
         //dd($adminDetails->toArray());
         if ($request->isMethod('post')) {
             $data = $request->all();
+
         }
 
+        return view('admin.admin_settings', compact('adminDetails'));
+    }
+
+    public function updateAdminDetails(Request $request)
+    {
+        $adminDetails = Auth::guard('admin')->user();
+        if ($request->isMethod('post')) {
+            // Validation with laravel validate and AJAX
+            /*
+             $validator = Validator::make($request->all(), [
+                 'admin_name' => 'required|alpha',
+                  'admin_phone' => 'required|numeric'
+             ]);
+            */
+            $rules = [
+                'admin_name' => 'required|alpha',
+                'admin_phone' => 'required|numeric'
+            ];
+
+            $request->validate($rules);
+            //dd($validator->errors());
+            // end of Validation with laravel validate
+
+            // Update datas
+
+            // end Update datas
+        }
         return view('admin.admin_settings', compact('adminDetails'));
     }
 
@@ -43,7 +71,7 @@ class AdminController extends Controller
                     // Update new password in database
                     Admin::where('id', $adminDetails->id)->update(['password' => bcrypt($data['admin_new_pwd'])]);
 
-                    Session::flash('success_message','Şifre başarıyla değiştirildi.');
+                    Session::flash('success_message', 'Şifre başarıyla değiştirildi.');
                     //return redirect(route('admin.settings'))->with('status', 'Şifre başarıyla değiştirildi.');
                     return redirect(route('admin.settings'));
                 } else {
@@ -66,7 +94,7 @@ class AdminController extends Controller
     public function checkConfirmPassword(Request $request)
     {
         $data = $request->all();
-        //echo '<pre>'; print_r($data); die;
+        // Validation with AJAX
         if ($data['admin_new_pwd'] === $data['admin_confirm_pwd']) {
             /*
             $data['isTrue'] = "true";
@@ -86,7 +114,7 @@ class AdminController extends Controller
     {
         $adminDetails = Auth::guard('admin')->user();
         $data = $request->all();
-        //echo '<pre>'; print_r($data); die;
+        // Validation with AJAX
         if (Hash::check($data['admin_current_pwd'], $adminDetails->password)) {
             /*
             $data['isTrue'] = "true";
@@ -111,7 +139,6 @@ class AdminController extends Controller
                 'email' => 'required|email|max:255',
                 'password' => 'required',
             ];
-
             $customMessages = [
                 'email.required' => 'E-posta adresi gereklidir!',
                 'email.email' => 'Geçerli bir e-posta adresi gereklidir!',

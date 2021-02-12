@@ -151,7 +151,8 @@
                             <!-- /.card-header -->
                             <!-- form start -->
                             <form role="form" method="post" action="{{route('admin.updateAdminDetails')}}"
-                                  name="updateAdminDetailsForm" id="updateAdminDetailsForm">
+                                  name="updateAdminDetailsForm" id="updateAdminDetailsForm"
+                                  enctype="multipart/form-data">
                                 @csrf
                                 <div class="card-body">
                                     <div class="form-group">
@@ -196,13 +197,20 @@
                                         @endif
                                     </div>
                                     <div class="form-group">
-                                        <label for="admin_image">Image</label>
+                                        <label for="admin_image">Resim</label>
                                         <div class="input-group">
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input form-control"
                                                        name="admin_image" id="admin_image">
                                                 <label class="custom-file-label" for="admin_image">Resim dosyasını
                                                     seçin...</label>
+                                                @if(!empty(Auth::guard('admin')->user()->image))
+                                                    <input type="hidden" class="custom-file-input form-control"
+                                                           name="current_admin_image" id="current_admin_image"
+                                                           value="{{Auth::guard('admin')->user()->image}}">
+                                                    <label class="custom-file-label" for="admin_image">Resim dosyasını
+                                                        seçin...</label>
+                                                @endif>
                                             </div>
                                             <div class="input-group-append">
                                                 <span class="input-group-text" id="">Yükle</span>

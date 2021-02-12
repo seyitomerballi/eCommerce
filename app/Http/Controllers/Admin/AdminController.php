@@ -7,6 +7,7 @@ use App\Models\Admin;
 use Auth;
 use Hash;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 use Session;
 
 class AdminController extends Controller
@@ -45,16 +46,36 @@ class AdminController extends Controller
             */
             $rules = [
                 'admin_name' => 'required|alpha',
-                'admin_phone' => 'required|numeric'
+                'admin_phone' => 'required|numeric',
+                'admin_image' => 'image'
             ];
 
             $request->validate($rules);
             //dd($validator->errors());
             // end of Validation with laravel validate
+            // Upload Image
+            if($request->hasFile('admin_image')){
+                $image_temp = $request->file('admin_image');
+                if($image_temp->isValid()){
+                    // get image extension
+                    $extension = $image_temp->getClientOriginalExtension();
+                    // Generate new image name
+                    $imageName = rand(111,9999).'.'.$extension;
+                    $imagePath = 'images/admin_img/admin_photos'.$imageName;
+                    // Upload the image
+                    Image::make($image_temp)->save($imagePath);
+                }else if(!empty($data['current_admin_image'])){
+                    $imageName = $data['current_admin_image'];
+                }else{
+                    $imageName = "";
+                }
+            }
 
             // Update Admin Details
             Admin::where('email', $adminDetails->email)
-                ->update(['name' => $data['admin_name'], 'mobile' => $data['admin_phone']]);
+                ->update(['name' => $data['admin_name'], 'mobile' => $data['admin_phone'],'image'=>$imageName]);
+                // Aşağıdaki gibi kaydedersen direk ulaşabiliriz yukarıdaki gibi kaydedersek view dosyasında önüne path getirmek gerekir.
+            //->update(['name' => $data['admin_name'], 'mobile' => $data['admin_phone'],'image'=>$imagePath]);
             session::flash('success_message_details', 'Admin detayları başarıyla güncellendi!');
             return redirect()->back();
             // end Update datas

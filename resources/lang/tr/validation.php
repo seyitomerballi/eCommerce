@@ -92,6 +92,7 @@ return array(
      */
     'attributes' => array(
         "admin_name" => "Admin adı",
-        "admin_phone" => "Telefon numarası"
+        "admin_phone" => "Telefon numarası",
+        "admin_image" => "Resim"
     ),
 );

@@ -1,4 +1,3 @@
-
 <!-- jQuery -->
 <script src=" {{ asset('plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -39,19 +38,25 @@
 <script src=" {{ asset('js/admin_js/demo.js')}}"></script>
 <!-- Custom Admin Scripts -->
 <script src=" {{ asset('js/admin_js/admin_script.js')}}"></script>
+<!-- DataTables -->
+<script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <!-- Success and error Alerts-->
 <script>
     @if(Session::has('success_message'))
-        toastr.success({{ Session::get('success_message') }});
-        @php
-            Session::forget('success_message');
-        @endphp
+    toastr.success({{ Session::get('success_message') }});
+    @php
+        Session::forget('success_message');
+    @endphp
     @endif
     @if(Session::has('error_message'))
-        toastr.success({{ Session::get('error_message') }});
-        @php
-            Session::forget('error_message');
-        @endphp
+    toastr.success({{ Session::get('error_message') }});
+    @php
+        Session::forget('error_message');
+    @endphp
     @endif
+
 </script>
 <!-- /.Success and error Alerts-->

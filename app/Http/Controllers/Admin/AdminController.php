@@ -14,9 +14,6 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        // view kısmında sidebarda active göstermek için
-        Session::put('page','dashboard');
-        //
         $adminDetails = Auth::guard('admin')->user();
 
         return view('admin.admin_dashboard', compact('adminDetails'));
@@ -24,9 +21,6 @@ class AdminController extends Controller
 
     public function settings(Request $request)
     {
-        // view kısmında sidebarda active göstermek için
-        Session::put('page','settings');
-        //
         $adminDetails = Auth::guard('admin')->user();
         //dd($adminDetails->toArray());
         if ($request->isMethod('post')) {
@@ -181,16 +175,9 @@ class AdminController extends Controller
 
             if (Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password']])) {
                 return redirect('admin/dashboard');
-                /* giriş yaptıktan sonra session silindikten sonra son gitmek istediğimiz sayfaya yönlendirilir.
-                return redirect()->intended();
-                */
             } else {
                 Session::flash('error_message', 'Geçersiz Email veya Parola');
                 return redirect()->back();
-
-                //$errors = ['email'=>'Hatalı giriş];
-                //return back()->withErrors($errors);
-
             }
         }
 

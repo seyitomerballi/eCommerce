@@ -551,6 +551,48 @@
                         <p>Informational</p>
                     </a>
                 </li>
+                @if(Session::get('page') === "sections" || Session::get('page') === "categories")
+                    <?php $active = "active"; ?>
+                @else
+                    <?php $active = ""; ?>
+                @endif
+                <li class="nav-item has-treeview menu-open">
+                    <a href="#" class="nav-link {{$active}}">
+                        <i class="nav-icon fas fa-circle"></i>
+                        <p>
+                            Catelogues
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview ">
+                        @if(Session::get('page') === "sections")
+                            <?php $active = "active"; ?>
+                        @else
+                            <?php $active = ""; ?>
+                        @endif
+                        <li class="nav-item">
+                            <a href="{{route('admin.sections.sections')}}" class="nav-link {{$active}}">
+                                <i class="nav-icon far fa-circle"></i>
+                                <p>
+                                    Sections
+                                </p>
+                            </a>
+                        </li>
+                        @if(Session::get('page') === "categories")
+                            <?php $active = "active"; ?>
+                        @else
+                            <?php $active = ""; ?>
+                        @endif
+                        <li class="nav-item">
+                            <a href="{{route('admin.categories.categories')}}" class="nav-link {{$active}}">
+                                <i class="nav-icon far fa-circle"></i>
+                                <p>
+                                    Categories
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

@@ -108,7 +108,7 @@
                                 <!-- /.card-body -->
                                 <div class="card-footer">
                                     <button type="submit" class="btn">
-                                        <a class="btn btn-app btn-success mx-0">
+                                        <a class="btn btn-app bg-success mx-0">
                                             <i class="fas fa-save"></i> Kaydet
                                         </a>
                                     </button>
@@ -222,7 +222,7 @@
 
                                 <div class="card-footer">
                                     <button type="submit" class="btn">
-                                        <a class="btn btn-app btn-success mx-0">
+                                        <a class="btn btn-app bg-success mx-0">
                                             <i class="fas fa-save"></i> Kaydet
                                         </a>
                                     </button>

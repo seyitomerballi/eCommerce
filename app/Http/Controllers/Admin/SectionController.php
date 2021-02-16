@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Section;
 use Auth;
 use Illuminate\Http\Request;
+use Session;
 
 class SectionController extends Controller
 {
-    public function section()
+    public function sections()
     {
         $adminDetails = Auth::guard('admin')->user();
+        Session::put('page','sections');
         $sections = Section::all();
         //dd($sections->toArray());
         return view('admin.sections.sections',compact('adminDetails','sections'));

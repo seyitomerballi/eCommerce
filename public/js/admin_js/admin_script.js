@@ -29,6 +29,11 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     // Check New and confirm password is matching
     $("#admin_confirm_pwd, #admin_new_pwd").keyup(function () {
         var admin_confirm_pwd = $("#admin_confirm_pwd").val();

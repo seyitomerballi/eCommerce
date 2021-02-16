@@ -9,6 +9,11 @@
 </script>
 <!-- Bootstrap 4 -->
 <script src=" {{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- DataTables -->
+<script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <!-- ChartJS -->
 <script src=" {{ asset('plugins/chart.js/Chart.min.js')}}"></script>
 <!-- Sparkline -->
@@ -28,9 +33,9 @@
 <!-- overlayScrollbars -->
 <script src=" {{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
 <!-- SweetAlert2 -->
-<script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+<script src=" {{ asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 <!-- Toastr -->
-<script src="{{asset('plugins/toastr/toastr.min.js')}}"></script>
+<script src=" {{ asset('plugins/toastr/toastr.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src=" {{ asset('js/admin_js/adminlte.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->

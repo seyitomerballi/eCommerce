@@ -20,7 +20,7 @@ class CategoryController extends Controller
         return view('admin.categories.categories',compact('adminDetails','categories'));
     }
 
-    public function createCategory()
+    public function addCategory()
     {
         return redirect()->back();
     }

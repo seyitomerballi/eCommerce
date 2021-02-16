@@ -1,4 +1,3 @@
-
 <!-- jQuery -->
 <script src=" {{ asset('plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -36,6 +35,9 @@
 <script src=" {{ asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 <!-- Toastr -->
 <script src=" {{ asset('plugins/toastr/toastr.min.js')}}"></script>
+
+@yield('footer-js')
+
 <!-- AdminLTE App -->
 <script src=" {{ asset('js/admin_js/adminlte.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -47,16 +49,17 @@
 <!-- Success and error Alerts-->
 <script>
     @if(Session::has('success_message'))
-        toastr.success({{ Session::get('success_message') }});
-        @php
-            Session::forget('success_message');
-        @endphp
+    toastr.success({{ Session::get('success_message') }});
+    @php
+        Session::forget('success_message');
+    @endphp
     @endif
     @if(Session::has('error_message'))
-        toastr.success({{ Session::get('error_message') }});
-        @php
-            Session::forget('error_message');
-        @endphp
+    toastr.success({{ Session::get('error_message') }});
+    @php
+        Session::forget('error_message');
+    @endphp
     @endif
+
 </script>
 <!-- /.Success and error Alerts-->

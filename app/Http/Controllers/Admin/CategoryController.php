@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Section;
 use Auth;
 use Illuminate\Http\Request;
 use Session;
@@ -19,10 +20,16 @@ class CategoryController extends Controller
 
         return view('admin.categories.categories',compact('adminDetails','categories'));
     }
-
-    public function addCategory()
+    public function addEditCategory($id = null)
     {
-        return redirect()->back();
+        $adminDetails = Auth::guard('admin')->user();
+        if($id == null){
+            $title = "Add Category";
+        }else{
+            $title = "Edit Category";
+        }
+        $getSections = Section::all();
+        return view('admin.categories.add_edit_category',compact('adminDetails','getSections','title'));
     }
 
     public function updateCategoryStatus()

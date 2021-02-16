@@ -14,6 +14,9 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
+        // view kısmında sidebarda active göstermek için
+        Session::put('page', 'dashboard');
+        //
         $adminDetails = Auth::guard('admin')->user();
 
         return view('admin.admin_dashboard', compact('adminDetails'));
@@ -21,6 +24,9 @@ class AdminController extends Controller
 
     public function settings(Request $request)
     {
+        // view kısmında sidebarda active göstermek için
+        Session::put('page', 'settings');
+        //
         $adminDetails = Auth::guard('admin')->user();
         //dd($adminDetails->toArray());
         if ($request->isMethod('post')) {
@@ -54,27 +60,27 @@ class AdminController extends Controller
             //dd($validator->errors());
             // end of Validation with laravel validate
             // Upload Image
-            if($request->hasFile('admin_image')){
+            if ($request->hasFile('admin_image')) {
                 $image_temp = $request->file('admin_image');
-                if($image_temp->isValid()){
+                if ($image_temp->isValid()) {
                     // get image extension
                     $extension = $image_temp->getClientOriginalExtension();
                     // Generate new image name
-                    $imageName = rand(111,9999).'.'.$extension;
-                    $imagePath = 'images/admin_img/admin_photos'.$imageName;
+                    $imageName = rand(111, 9999) . '.' . $extension;
+                    $imagePath = 'images/admin_img/admin_photos' . $imageName;
                     // Upload the image
                     Image::make($image_temp)->save($imagePath);
-                }else if(!empty($data['current_admin_image'])){
+                } else if (!empty($data['current_admin_image'])) {
                     $imageName = $data['current_admin_image'];
-                }else{
+                } else {
                     $imageName = "";
                 }
             }
 
             // Update Admin Details
             Admin::where('email', $adminDetails->email)
-                ->update(['name' => $data['admin_name'], 'mobile' => $data['admin_phone'],'image'=>$imageName]);
-                // Aşağıdaki gibi kaydedersen direk ulaşabiliriz yukarıdaki gibi kaydedersek view dosyasında önüne path getirmek gerekir.
+                ->update(['name' => $data['admin_name'], 'mobile' => $data['admin_phone'], 'image' => $imageName]);
+            // Aşağıdaki gibi kaydedersen direk ulaşabiliriz yukarıdaki gibi kaydedersek view dosyasında önüne path getirmek gerekir.
             //->update(['name' => $data['admin_name'], 'mobile' => $data['admin_phone'],'image'=>$imagePath]);
             session::flash('success_message_details', 'Admin detayları başarıyla güncellendi!');
             return redirect()->back();
@@ -175,9 +181,16 @@ class AdminController extends Controller
 
             if (Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password']])) {
                 return redirect('admin/dashboard');
+                /* giriş yaptıktan sonra session silindikten sonra son gitmek istediğimiz sayfaya yönlendirilir.
+                return redirect()->intended();
+                */
             } else {
                 Session::flash('error_message', 'Geçersiz Email veya Parola');
                 return redirect()->back();
+
+                //$errors = ['email'=>'Hatalı giriş];
+                //return back()->withErrors($errors);
+
             }
         }
 

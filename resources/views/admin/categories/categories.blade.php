@@ -26,7 +26,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <a class="btn btn-app float-right bg-success">
+                                <a href="{{route('admin.categories.createCategory')}}" class="btn btn-app float-right bg-success">
                                     <i class="fas fa-plus"></i> Add Category
                                 </a>
                             </div>

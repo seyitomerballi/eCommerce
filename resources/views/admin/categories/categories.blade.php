@@ -24,9 +24,37 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+                        <!-- Success and error Alerts-->
+                        <!-- Success Alert -->
+                        @if(Session::has('success_message_add_category'))
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <h5><i class="icon fas fa-check"></i>Başarılı!</h5>
+                                {{ Session::get('success_message_add_category') }}
+                                @php
+                                    Session::forget('success_message_add_category');
+                                @endphp
+                            </div>
+                        @endif
+                        <!-- /.Success Alert -->
+                        <!-- Error Alert -->
+                        @if(Session::has('error_message'))
+                            <div class="alert alert-danger alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <h5><i class="icon fas fa-check"></i>Hata!</h5>
+                                {{ Session::get('error_message') }}
+                                @php
+                                    Session::forget('error_message');
+                                @endphp
+                            </div>
+                        @endif
+
+                    <!-- /.Error Alert -->
+                        <!-- /.Success and error Alerts-->
                         <div class="card">
                             <div class="card-header">
-                                <a href="{{route('admin.categories.addEditCategory')}}" class="btn btn-app float-right bg-success">
+                                <a href="{{route('admin.categories.addEditCategory')}}"
+                                   class="btn btn-app float-right bg-success">
                                     <i class="fas fa-plus"></i> Add Category
                                 </a>
                             </div>

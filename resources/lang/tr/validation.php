@@ -93,6 +93,10 @@ return array(
     'attributes' => array(
         "admin_name" => "Admin adı",
         "admin_phone" => "Telefon numarası",
-        "admin_image" => "Resim"
+        "admin_image" => "Resim",
+        "category_name" => "Kategori adı",
+        "category_section_id" => "Bölüm",
+        "category_slug" => "Url",
+        "category_image" => "Kategori resmi",
     ),
 );

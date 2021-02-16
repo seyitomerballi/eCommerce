@@ -131,18 +131,7 @@
                             </div>
                         @endif
                     <!-- /.Success Alert -->
-                        <!-- Error Alert -->
-                        @if(Session::has('error_message'))
-                            <div class="alert alert-danger alert-dismissible">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
-                                <h5><i class="icon fas fa-check"></i>Hata!</h5>
-                                {{ Session::get('error_message') }}
-                                @php
-                                    Session::forget('error_message');
-                                @endphp
-                            </div>
-                    @endif
-                    <!-- /.Error Alert -->
+
                         <!-- /.Success and error Alerts-->
                         <div class="card card-navy disabled">
                             <div class="card-header">

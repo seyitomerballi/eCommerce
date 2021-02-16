@@ -16,10 +16,8 @@ class AdminController extends Controller
     {
         // view kısmında sidebarda active göstermek için
         Session::put('page', 'dashboard');
-        //
-        $adminDetails = Auth::guard('admin')->user();
 
-        return view('admin.admin_dashboard', compact('adminDetails'));
+        return view('admin.admin_dashboard');
     }
 
     public function settings(Request $request)
@@ -66,7 +64,7 @@ class AdminController extends Controller
                     // get image extension
                     $extension = $image_temp->getClientOriginalExtension();
                     // Generate new image name
-                    $imageName = rand(111, 9999) . '.' . $extension;
+                    $imageName = rand(111, 1999999999) . '.' . $extension;
                     $imagePath = 'images/admin_img/admin_photos' . $imageName;
                     // Upload the image
                     Image::make($image_temp)->save($imagePath);

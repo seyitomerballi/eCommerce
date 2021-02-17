@@ -13,4 +13,15 @@ class Category extends Model
     {
         return $this->hasMany(Category::class,'parent_id')->where('status',1);
     }
+
+    public function section()
+    {
+        return $this->belongsTo(Section::class,'section_id');
+    }
+
+    public function parent_category()
+    {
+        return $this->belongsTo(Category::class,'parent_id')
+            ->withDefault(['category_name' => 'Root Category']);
+    }
 }

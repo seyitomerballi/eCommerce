@@ -9,16 +9,23 @@ use Auth;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Session;
+use function PHPUnit\Framework\isEmpty;
 
 class CategoryController extends Controller
 {
     public function categories()
     {
         Session::put('page', 'categories');
-        $categories = Category::all();
+        $categories = Category::with(['section','parent_category'])->get();
+        /*
+        $categories = Category::with(['section' => function ($query) {
+            $query->select('id', 'name');
+        }, 'parent_category' => function ($query) {
+            $query->select('id', 'category_name', 'slug');
+        }])->get();
+*/
         //dd($categories->toArray());
-
-        return view('admin.categories.categories', compact('categories'));
+        return view('admin.categories.categories')->with(compact('categories'));
     }
 
     public function addEditCategory($id = null)
@@ -40,7 +47,7 @@ class CategoryController extends Controller
                 'category_slug' => 'required',
                 'category_image' => 'image',
             ];
-            $this->validate(request(),$rules);
+            $this->validate(request(), $rules);
             $category->parent_id = $data['category_parent_id'];
             $category->section_id = $data['category_section_id'];
             $category->slug = $data['category_slug'];
@@ -77,13 +84,14 @@ class CategoryController extends Controller
 
     public function appendCategoryLevel()
     {
-        if(request()->ajax()){
+        if (request()->ajax()) {
             $data = request()->all();
-            $getCategories = Category::with('subcategories')->where(['section_id'=>$data['category_section_id'],'parent_id' => 0,'status'=>1])->get();
+            $getCategories = Category::with('subcategories')->where(['section_id' => $data['category_section_id'], 'parent_id' => 0, 'status' => 1])->get();
             //dd($getCategories);
             return view('admin.categories.append_categories_level')->with(compact('getCategories'));
         }
     }
+
     public function updateCategoryStatus()
     {
 

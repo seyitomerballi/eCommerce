@@ -36,7 +36,7 @@
                                 @endphp
                             </div>
                         @endif
-                        <!-- /.Success Alert -->
+                    <!-- /.Success Alert -->
                         <!-- Error Alert -->
                         @if(Session::has('error_message'))
                             <div class="alert alert-danger alert-dismissible">
@@ -47,7 +47,7 @@
                                     Session::forget('error_message');
                                 @endphp
                             </div>
-                        @endif
+                    @endif
 
                     <!-- /.Error Alert -->
                         <!-- /.Success and error Alerts-->
@@ -71,16 +71,27 @@
                                                     <th class="sorting_asc" tabindex="0" aria-controls="example1"
                                                         rowspan="1" colspan="1" aria-sort="ascending"
                                                         aria-label="Rendering engine: activate to sort column descending">
-                                                        #
+                                                        Id
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1"
                                                         rowspan="1" colspan="1"
-                                                        aria-label="Browser: activate to sort column ascending">Name
+                                                        aria-label="Browser: activate to sort column ascending">Category Name
                                                     </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                        rowspan="1" colspan="1"
+                                                        aria-label="Browser: activate to sort column ascending">Parent
+                                                        Category
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                             rowspan="1" colspan="1"
+                                                             aria-label="Browser: activate to sort column ascending">Section
+                                                        Name
+                                                    </th>
+
                                                     <th class="sorting" tabindex="0" aria-controls="example1"
                                                         rowspan="1" colspan="1"
                                                         aria-label="Platform(s): activate to sort column ascending">
-                                                        Slug
+                                                        URL
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="example1"
                                                         rowspan="1" colspan="1"
@@ -94,6 +105,8 @@
                                                     <tr role="row" class="odd">
                                                         <td tabindex="0" class="sorting_1">{{$category->id}}</td>
                                                         <td>{{$category->category_name}}</td>
+                                                        <td>{{$category->parent_category->category_name}}</td>
+                                                        <td>{{$category->section->name}}</td>
                                                         <td>{{$category->slug}}</td>
                                                         <td>@if($category->status === 1)
                                                                 <a class="updateCategoryStatus"

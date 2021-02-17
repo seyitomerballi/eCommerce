@@ -100,9 +100,13 @@ $(document).ready(function () {
                 //alert(resp['category_id']);
                 //console.log(resp);
                 if (resp['status'] === 0) {
-                    $("#category-" + category_id).html("<a class='updateCategoryStatus' href='javascript:void(0)'>Inactive</a>");
+                    $("#category-" + category_id).removeClass()
+                        .html("<a class='updateCategoryStatus btn btn-sm btn-outline-info' " +
+                            "href='javascript:void(0)'><i class='fas fa-times'></i> Inactive</a>");
                 } else if (resp['status'] === 1) {
-                    $("#category-" + category_id).html("<a class='updateCategoryStatus' href='javascript:void(0)'>Active</a>");
+                    $("#category-" + category_id).removeClass()
+                        .html("<a class='updateCategoryStatus btn btn-sm btn-info' " +
+                            "href='javascript:void(0)'> <i class='fas fa-check'></i> Active</a>");
                 }
             },
             error: function () {

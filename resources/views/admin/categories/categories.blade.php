@@ -68,57 +68,75 @@
                                                    role="grid" aria-describedby="example1_info">
                                                 <thead>
                                                 <tr role="row">
-                                                    <th class="sorting_asc" tabindex="0" aria-controls="example1"
+                                                    <th class="text-center sorting_asc" tabindex="0" aria-controls="example1"
                                                         rowspan="1" colspan="1" aria-sort="ascending"
                                                         aria-label="Rendering engine: activate to sort column descending">
                                                         Id
                                                     </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    <th class="text-center sorting" tabindex="0" aria-controls="example1"
                                                         rowspan="1" colspan="1"
-                                                        aria-label="Browser: activate to sort column ascending">Category Name
+                                                        aria-label="Browser: activate to sort column ascending">Category
+                                                        Name
                                                     </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    <th class="text-center sorting" tabindex="0" aria-controls="example1"
                                                         rowspan="1" colspan="1"
                                                         aria-label="Browser: activate to sort column ascending">Parent
                                                         Category
                                                     </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
-                                                             rowspan="1" colspan="1"
-                                                             aria-label="Browser: activate to sort column ascending">Section
+                                                    <th class="text-center sorting" tabindex="0" aria-controls="example1"
+                                                        rowspan="1" colspan="1"
+                                                        aria-label="Browser: activate to sort column ascending">Section
                                                         Name
                                                     </th>
-
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    <th class="text-center sorting" tabindex="0" aria-controls="example1"
                                                         rowspan="1" colspan="1"
                                                         aria-label="Platform(s): activate to sort column ascending">
                                                         URL
                                                     </th>
-                                                    <th class="sorting" tabindex="0" aria-controls="example1"
+                                                    <th class="text-center sorting" tabindex="0" aria-controls="example1"
                                                         rowspan="1" colspan="1"
                                                         aria-label="Platform(s): activate to sort column ascending">
                                                         Status
+                                                    </th>
+                                                    <th class="text-center sorting" tabindex="0"
+                                                        aria-controls="example1"
+                                                        rowspan="1" colspan="1"
+                                                        aria-label="Platform(s): activate to sort column ascending">
+                                                        Actions
                                                     </th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 @foreach($categories as $category)
                                                     <tr role="row" class="odd">
-                                                        <td tabindex="0" class="sorting_1">{{$category->id}}</td>
+                                                        <td tabindex="0" class="text-center sorting_1">{{$category->id}}</td>
                                                         <td>{{$category->category_name}}</td>
                                                         <td>{{$category->parent_category->category_name}}</td>
                                                         <td>{{$category->section->name}}</td>
                                                         <td>{{$category->slug}}</td>
-                                                        <td>@if($category->status === 1)
-                                                                <a class="updateCategoryStatus"
+                                                        <td class="text-center">@if($category->status === 1)
+                                                                <a class="updateCategoryStatus btn btn-sm btn-info"
                                                                    id="category-{{$category->id}}"
                                                                    category_id="{{$category->id}}"
-                                                                   href="javascript:void(0)">Active</a>
+                                                                   href="javascript:void(0)"><i
+                                                                        class="fas fa-check"></i> Active</a>
                                                             @else
-                                                                <a class="updateCategoryStatus"
+                                                                <a class="updateCategoryStatus btn btn-sm btn-outline-info"
                                                                    id="category-{{$category->id}}"
                                                                    category_id="{{$category->id}}"
-                                                                   href="javascript:void(0)">Inactive</a>
+                                                                   href="javascript:void(0)"><i
+                                                                        class="fas fa-times"></i> Inactive</a>
                                                             @endif
+                                                        </td>
+                                                        <td class="row text-center">
+                                                            <a href="{{route('admin.categories.addEditCategory',$category->id)}}"
+                                                               class="col col-5 mx-auto my-auto btn btn-block btn-sm btn-primary text-white">
+                                                                <i class="fas fa-edit"></i> Edit
+                                                            </a>
+                                                            <a href=""
+                                                                class="col col-5 mx-auto my-auto btn btn-block btn-sm btn-danger text-white">
+                                                                <i class="fas fa-trash-alt"></i> Delete
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                 @endforeach

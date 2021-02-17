@@ -5,10 +5,10 @@
         <option value="0">Main Category</option>
         @if(!empty($getCategories))
             @foreach($getCategories as $category)
-                <option value="{{$category->category_id}}">{{$category->category_name}}</option>
+                <option value="{{$category->id}}">{{$category->category_name}}</option>
                 @if(!empty($category->subcategories))
                     @foreach($category->subcategories as $subcategory)
-                        <option value="{{$subcategory->category_id}}">&nbsp;&ensp;&#8627;&nbsp;{{$subcategory->category_name}}</option>
+                        <option value="{{$subcategory->id}}">&nbsp;&ensp;&#8627;&nbsp;{{$subcategory->category_name}}</option>
                     @endforeach
                 @endif
             @endforeach

@@ -37,8 +37,8 @@
                     Session::forget('error_message');
                 @endphp
             </div>
-        @endif
-        <!-- /.Error Alert -->
+    @endif
+    <!-- /.Error Alert -->
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -73,16 +73,8 @@
                                         @endif
                                     </div>
                                     <!-- /.form-group -->
-                                    <div class="form-group">
-                                        <label>Select Category Level</label>
-                                        <select name="category_parent_id" id="category_parent_id"
-                                                class="form-control select2" style="width: 100%;">
-                                            <option value="0">Main Category</option>
-                                        </select>
-                                        @if($errors->has('category_parent_id'))
-                                            <span id="category_parent_id_err"
-                                                  style="color: red">{{$errors->first('category_parent_id')}}</span>
-                                        @endif
+                                    <div id="appendCategoriesLevel">
+                                        @include('admin.categories.append_categories_level')
                                     </div>
                                     <!-- /.form-group -->
                                     <div class="form-group">

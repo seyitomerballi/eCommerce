@@ -45,10 +45,12 @@ Route::prefix('/admin')->namespace('Admin')->name('admin.')->group(function () {
             Route::get('sections',[SectionController::class,'sections'])->name('sections');
             Route::match(['post','get'],'update-section-status',[SectionController::class,'updateSectionStatus'])->name('updateSectionStatus');
         });
+        // Categories --- names-> admin.categories.example
         Route::name('categories.')->group(function (){
             Route::get('categories',[CategoryController::class,'categories'])->name('categories');
             Route::post('update-category-status',[CategoryController::class,'updateCategoryStatus'])->name('updateCategoryStatus');
             Route::match(['post','get'],'add-edit-category/{slug?}',[CategoryController::class,'addEditCategory'])->name('addEditCategory');
+            Route::post('append-categories-level',[CategoryController::class,'appendCategoryLevel'])->name('appendCategoryLevel');
         });
     });
     // END ADMIN MIDDLEWARE

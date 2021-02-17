@@ -111,6 +111,21 @@ $(document).ready(function () {
         });
     });
 
+    // Append Categories Level
+    $("#category_section_id").change(function () {
+        var category_section_id = $(this).val();
+        $.ajax({
+            type: 'post',
+            url: '/admin/append-categories-level',
+            data: {category_section_id: category_section_id},
+            success: function (resp) {
+                $("#appendCategoriesLevel").html(resp);
+            },
+            error: function () {
+                alert("Error");
+            },
+        });
+    });
 
     $(function () {
         // Datatables

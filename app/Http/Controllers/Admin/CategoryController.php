@@ -31,10 +31,18 @@ class CategoryController extends Controller
     public function addEditCategory($id = null)
     {
         if ($id == null) {
+            // Add Category Functionality
             $title = "Add Category";
             $category = new Category();
+            $categoryData = array();
+            $getCategories = array();
         } else {
+            // Edit Category Functionality
             $title = "Edit Category";
+            $categoryData = Category::where('id',$id)->first();
+            $getCategories = Category::with('subcategories')->where(['parent_id'=>0,'section_id'=>$categoryData->section_id])->get();
+            //dd($categoryData);
+            //dd($getCategories);
         }
 
         if (request()->isMethod('post')) {
@@ -79,7 +87,7 @@ class CategoryController extends Controller
 
         // get all sections
         $getSections = Section::all();
-        return view('admin.categories.add_edit_category', compact('getSections', 'title'));
+        return view('admin.categories.add_edit_category')->with(compact('getSections', 'title','categoryData','getCategories'));
     }
 
     public function appendCategoryLevel()

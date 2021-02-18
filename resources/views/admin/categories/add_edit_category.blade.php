@@ -43,7 +43,11 @@
         <section class="content">
             <div class="container-fluid">
                 <form name="categoryForm" id="categoryForm"
+                      @if(empty($categoryData->id))
                       action="{{route('admin.categories.addEditCategory')}}"
+                      @else
+                      action="{{route('admin.categories.addEditCategory',$categoryData->id)}}"
+                      @endif
                       method="post" enctype="multipart/form-data">
                 @csrf
                 <!-- SELECT2 EXAMPLE -->
@@ -66,6 +70,11 @@
                                         <label for="category_name">Category Name</label>
                                         <input type="text" class="form-control"
                                                name="category_name" id="category_name"
+                                               @if(!empty($categoryData->category_name))
+                                               value="{{$categoryData->category_name}}"
+                                               @else
+                                               value="{{old('category_name')}}"
+                                               @endif
                                                placeholder="Enter category name">
                                         @if($errors->has('category_name'))
                                             <span id="category_name_err"
@@ -81,7 +90,12 @@
                                         <label for="category_discount">Category Discount</label>
                                         <input name="category_discount" id="category_discount"
                                                type="text" class="form-control"
-                                               placeholder="Enter category discound">
+                                               @if(!empty($categoryData->category_discount))
+                                               value="{{$categoryData->category_discount}}"
+                                               @else
+                                               value="{{old('category_discount')}}"
+                                               @endif
+                                               placeholder="Enter category discount">
                                         @if($errors->has('category_discount'))
                                             <span id="category_discount_err"
                                                   style="color: red">{{$errors->first('category_discount')}}</span>
@@ -92,7 +106,13 @@
                                         <label for="category_description">Category Description</label>
                                         <textarea name="category_description" id="category_description"
                                                   type="text" class="form-control"
-                                                  placeholder="Enter category description"></textarea>
+                                                  placeholder="Enter category description">
+                                                  @if(!empty($categoryData->description))
+                                                {{$categoryData->description}}
+                                            @else
+                                                {{old('description')}}
+                                            @endif
+                                        </textarea>
                                         @if($errors->has('category_description'))
                                             <span id="category_description_err"
                                                   style="color: red">{{$errors->first('category_description')}}</span>
@@ -103,7 +123,13 @@
                                         <label for="category_meta_description">Category Meta Description </label>
                                         <textarea name="category_meta_description" id="category_meta_description"
                                                   type="text" class="form-control"
-                                                  placeholder="Enter category meta description"></textarea>
+                                                  placeholder="Enter category meta description">
+                                            @if(!empty($categoryData->meta_description))
+                                                {{$categoryData->meta_description}}
+                                            @else
+                                                {{old('meta_description')}}
+                                            @endif
+                                        </textarea>
                                         @if($errors->has('category_meta_description'))
                                             <span id="category_meta_description_err"
                                                   style="color: red">{{$errors->first('category_meta_description')}}</span>
@@ -120,7 +146,12 @@
                                                 class="form-control select2" style="width: 100%;">
                                             <option value="">Select</option>
                                             @foreach($getSections as $section)
-                                                <option value="{{$section->id}}">{{$section->name}}</option>
+                                                <option
+                                                    value="{{$section->id}}"
+                                                    @if(!empty($categoryData->section_id) && ($categoryData->section_id == $section->id))
+                                                    selected
+                                                    @endif
+                                                >{{$section->name}}</option>
                                             @endforeach
                                         </select>
                                         @if($errors->has('category_section_id'))
@@ -152,6 +183,11 @@
                                         <label for="category_slug">Category Slug</label>
                                         <input name="category_slug" id="category_slug"
                                                type="text" class="form-control"
+                                               @if(!empty($categoryData->slug))
+                                               value="{{$categoryData->slug}}"
+                                               @else
+                                               value="{{old('slug')}}"
+                                               @endif
                                                placeholder="Enter category slug">
                                         @if($errors->has('category_slug'))
                                             <span id="category_slug_err"
@@ -163,7 +199,13 @@
                                         <label for="category_meta_title">Category Meta Title</label>
                                         <textarea type="text" class="form-control"
                                                   name="category_meta_title" id="category_meta_title"
-                                                  placeholder="Enter category meta title"></textarea>
+                                                  placeholder="Enter category meta title">
+                                            @if(!empty($categoryData->meta_title))
+                                                {{$categoryData->meta_title}}
+                                            @else
+                                                {{old('meta_title')}}
+                                            @endif
+                                        </textarea>
                                         @if($errors->has('category_meta_title'))
                                             <span id="category_meta_title_err"
                                                   style="color: red">{{$errors->first('category_meta_title')}}</span>
@@ -174,7 +216,13 @@
                                         <label for="category_meta_keyword">Category Meta Keywords </label>
                                         <textarea type="text" class="form-control"
                                                   name="category_meta_keywords" id="category_meta_keywords"
-                                                  placeholder="Enter category meta keywords"></textarea>
+                                                  placeholder="Enter category meta keywords">
+                                            @if(!empty($categoryData->meta_keywords))
+                                                {{$categoryData->meta_keywords}}
+                                            @else
+                                                {{old('category_meta_keywords')}}
+                                            @endif
+                                        </textarea>
                                         @if($errors->has('category_meta_keyword'))
                                             <span id="category_meta_keyword_err"
                                                   style="color: red">{{$errors->first('category_meta_keyword')}}</span>
@@ -190,7 +238,11 @@
                         <div class="card-footer">
                             <button type="submit" class="btn">
                                 <a class="btn btn-app bg-success mx-0">
-                                    <i class="fas fa-save"></i> Add
+                                    @if(empty($categoryData->id))
+                                        <i class="fas fa-save"></i> Add
+                                    @else
+                                        <i class="fas fa-save"></i> Save
+                                    @endif
                                 </a>
                             </button>
                         </div>

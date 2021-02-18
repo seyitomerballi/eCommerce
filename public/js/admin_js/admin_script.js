@@ -114,9 +114,9 @@ $(document).ready(function () {
             }
         });
     });
-
     // Append Categories Level
-    $("#category_section_id").change(function () {
+
+    $("#category_section_id").on('change', function () {
         var category_section_id = $(this).val();
         $.ajax({
             type: 'post',
@@ -130,6 +130,7 @@ $(document).ready(function () {
             },
         });
     });
+
 
     $(function () {
         // Datatables

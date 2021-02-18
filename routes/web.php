@@ -51,6 +51,7 @@ Route::prefix('/admin')->namespace('Admin')->name('admin.')->group(function () {
             Route::post('update-category-status',[CategoryController::class,'updateCategoryStatus'])->name('updateCategoryStatus');
             Route::match(['post','get'],'add-edit-category/{slug?}',[CategoryController::class,'addEditCategory'])->name('addEditCategory');
             Route::post('append-categories-level',[CategoryController::class,'appendCategoryLevel'])->name('appendCategoryLevel');
+            Route::match(['post','get'],'delete-category-image/{id}',[CategoryController::class,'deleteCategoryImage'])->name('deleteCategoryImage');
         });
     });
     // END ADMIN MIDDLEWARE

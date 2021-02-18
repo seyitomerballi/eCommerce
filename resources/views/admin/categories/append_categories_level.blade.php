@@ -1,12 +1,16 @@
-<div class="form-group ">
+<div class="form-group">
     <label>Select Category Level</label>
     <select name="category_parent_id" id="category_parent_id"
             class="form-control select2" style="width: 100%;">
-        <option value="0">Main Category</option>
+        <option value="0"
+                @if(isset($categoryData->parent_id) && ($categoryData->parent_id == 0))
+                selected
+            @endif
+        > Main Category</option>
         @if(!empty($getCategories))
             @foreach($getCategories as $category)
                 <option
-                    @if(!empty($categoryData->category_id) && ($categoryData->category_id == $category->id))
+                    @if(isset($categoryData->parent_id) && ($categoryData->parent_id == $category->id))
                     selected
                     @endif
                     value="{{$category->id}}"
@@ -15,7 +19,7 @@
                 @if(!empty($category->subcategories))
                     @foreach($category->subcategories as $subcategory)
                         <option
-                            @if(!empty($categoryData->subcategory->category_id) && ($categoryData->subcategory->category_id == $subcategory->id))
+                            @if(isset($categoryData->parent_id) && ($categoryData->parent_id == $subcategory->id))
                             selected
                             @endif
                             value="{{$subcategory->id}}">

@@ -33,14 +33,20 @@ class CategoryController extends Controller
         if ($id == null) {
             // Add Category Functionality
             $title = "Add Category";
+            $message_object = 'success_message_add_category';
+            $message = 'Kategori başarıyla eklendi!';
             $category = new Category();
             $categoryData = array();
             $getCategories = array();
+
         } else {
             // Edit Category Functionality
             $title = "Edit Category";
+            $message_object = 'success_message_add_category';
+            $message = 'Kategori başarıyla güncellendi!';
             $categoryData = Category::where('id',$id)->first();
             $getCategories = Category::with('subcategories')->where(['parent_id'=>0,'section_id'=>$categoryData->section_id])->get();
+            $category = Category::findOrFail($id);
             //dd($categoryData);
             //dd($getCategories);
         }
@@ -56,16 +62,7 @@ class CategoryController extends Controller
                 'category_image' => 'image',
             ];
             $this->validate(request(), $rules);
-            $category->parent_id = $data['category_parent_id'];
-            $category->section_id = $data['category_section_id'];
-            $category->slug = $data['category_slug'];
-            $category->category_name = $data['category_name'];
-            $category->category_discount = $data['category_discount'];
-            $category->description = $data['category_description'];
-            $category->meta_title = $data['category_meta_title'];
-            $category->meta_description = $data['category_meta_description'];
-            $category->meta_keywords = $data['category_meta_keywords'];
-            $category->status = 1;
+
             // Upload Category Image
             if (request()->hasFile('category_image')) {
                 $image_temp = request()->file('category_image');
@@ -80,8 +77,33 @@ class CategoryController extends Controller
                     $category->category_image = $imageName;
                 }
             }
+            if(empty($data['category_discount'])){
+                $data['category_discount'] = "";
+            }
+            if(empty($data['category_description'])){
+                $data['category_description'] = "";
+            }
+            if(empty($data['category_meta_title'])){
+                $data['category_meta_title'] = "";
+            }
+            if(empty($data['category_meta_description'])){
+                $data['category_meta_description'] = "";
+            }
+            if(empty($data['category_meta_keywords'])){
+                $data['category_meta_keywords'] = "";
+            }
+            $category->parent_id = $data['category_parent_id'];
+            $category->section_id = $data['category_section_id'];
+            $category->slug = $data['category_slug'];
+            $category->category_name = $data['category_name'];
+            $category->category_discount = $data['category_discount'];
+            $category->description = $data['category_description'];
+            $category->meta_title = $data['category_meta_title'];
+            $category->meta_description = $data['category_meta_description'];
+            $category->meta_keywords = $data['category_meta_keywords'];
+            $category->status = 1;
             $category->save();
-            session::flash('success_message_add_category', 'Kategori başarıyla eklendi!');
+            session::flash($message_object,$message);
             return redirect(route('admin.categories.categories'));
         }
 
@@ -90,6 +112,21 @@ class CategoryController extends Controller
         return view('admin.categories.add_edit_category')->with(compact('getSections', 'title','categoryData','getCategories'));
     }
 
+    public function deleteCategoryImage($id)
+    {
+        // Get Category Image
+        $categoryImage = Category::select('category_image')->where('id',$id)->first();
+        // Get Category Image Path
+        $categoryImagePath = 'images/category_images/category_photos_';
+        // Delete Category Image from category_images folder if exists
+        if(file_exists($categoryImagePath . $categoryImage)){
+            unlink($categoryImagePath . $categoryImage);
+        }
+
+        // Delete Category Image from database category table
+        Category::where('id',$id)->update(['category_image'=>'']);
+        return redirect()->back()->with('flash_message_success','Kategori resmi başarılı bir şekilde silindi!');
+    }
     public function appendCategoryLevel()
     {
         if (request()->ajax()) {
@@ -120,4 +157,5 @@ class CategoryController extends Controller
         echo "<pre>"; print_r($data); die;
         */
     }
+
 }

@@ -27,7 +27,17 @@
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-        <!-- Error Alert -->
+        @if(Session::has('flash_messages_success'))
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-check"></i>Başarılı!</h5>
+                {{ Session::get('flash_messages_success') }}
+                @php
+                    Session::forget('flash_messages_success');
+                @endphp
+            </div>
+        @endif
+    <!-- Error Alert -->
         @if(Session::has('error_message'))
             <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
@@ -85,6 +95,21 @@
                                     <div id="appendCategoriesLevel">
                                         @include('admin.categories.append_categories_level')
                                     </div>
+                                    <div class="form-group">
+                                        <label for="category_slug">Category Slug</label>
+                                        <input name="category_slug" id="category_slug"
+                                               type="text" class="form-control"
+                                               @if(!empty($categoryData->slug))
+                                               value="{{$categoryData->slug}}"
+                                               @else
+                                               value="{{old('slug')}}"
+                                               @endif
+                                               placeholder="Enter category slug">
+                                        @if($errors->has('category_slug'))
+                                            <span id="category_slug_err"
+                                                  style="color: red">{{$errors->first('category_slug')}}</span>
+                                        @endif
+                                    </div>
                                     <!-- /.form-group -->
                                     <div class="form-group">
                                         <label for="category_discount">Category Discount</label>
@@ -103,39 +128,51 @@
                                     </div>
                                     <!-- /.form-group -->
                                     <div class="form-group">
-                                        <label for="category_description">Category Description</label>
-                                        <textarea name="category_description" id="category_description"
-                                                  type="text" class="form-control"
-                                                  placeholder="Enter category description">
-                                                  @if(!empty($categoryData->description))
-                                                {{$categoryData->description}}
-                                            @else
-                                                {{old('description')}}
-                                            @endif
-                                        </textarea>
-                                        @if($errors->has('category_description'))
-                                            <span id="category_description_err"
-                                                  style="color: red">{{$errors->first('category_description')}}</span>
+                                        <label for="category_meta_title">Category Meta Title</label>
+                                        <textarea type="text" class="form-control"
+                                                  name="category_meta_title" id="category_meta_title"
+                                                  placeholder="Enter category meta title">@if(!empty($categoryData->meta_title)){{$categoryData->meta_title}}@else{{old('category_meta_title')}}@endif</textarea>
+                                        @if($errors->has('category_meta_title'))
+                                            <span id="category_meta_title_err"
+                                                  style="color: red">{{$errors->first('category_meta_title')}}</span>
                                         @endif
                                     </div>
                                     <!-- /.form-group -->
-                                    <div class="form-group">
-                                        <label for="category_meta_description">Category Meta Description </label>
-                                        <textarea name="category_meta_description" id="category_meta_description"
-                                                  type="text" class="form-control"
-                                                  placeholder="Enter category meta description">
-                                            @if(!empty($categoryData->meta_description))
-                                                {{$categoryData->meta_description}}
-                                            @else
-                                                {{old('meta_description')}}
+                                    @if(!empty($categoryData->category_image))
+                                        <div class="form-group">
+                                            <label for="category_meta_keyword">Category Meta Keywords </label>
+                                            <textarea type="text" class="form-control"
+                                                      name="category_meta_keywords" id="category_meta_keywords"
+                                                      placeholder="Enter category meta keywords">@if(!empty($categoryData->meta_keywords)){{$categoryData->meta_keywords}}@else{{old('category_meta_keywords')}}@endif</textarea>
+                                            @if($errors->has('category_meta_keyword'))
+                                                <span id="category_meta_keyword_err"
+                                                      style="color: red">{{$errors->first('category_meta_keyword')}}</span>
                                             @endif
-                                        </textarea>
-                                        @if($errors->has('category_meta_description'))
-                                            <span id="category_meta_description_err"
-                                                  style="color: red">{{$errors->first('category_meta_description')}}</span>
-                                        @endif
-                                    </div>
-                                    <!-- /.form-group -->
+                                        </div>
+                                        <!-- /.form-group -->
+                                        <div class="form-group">
+                                            <label for="category_description">Category Description</label>
+                                            <textarea name="category_description" id="category_description"
+                                                      type="text" class="form-control"
+                                                      placeholder="Enter category description">@if(!empty($categoryData->description)){{$categoryData->description}}@else{{old('category_description')}}@endif</textarea>
+                                            @if($errors->has('category_description'))
+                                                <span id="category_description_err"
+                                                      style="color: red">{{$errors->first('category_description')}}</span>
+                                            @endif
+                                        </div>
+                                        <!-- /.form-group -->
+                                        <div class="form-group">
+                                            <label for="category_meta_description">Category Meta Description </label>
+                                            <textarea name="category_meta_description" id="category_meta_description"
+                                                      type="text" class="form-control"
+                                                      placeholder="Enter category meta description">@if(!empty($categoryData->meta_description)){{$categoryData->meta_description}}@else{{old('category_meta_description')}}@endif</textarea>
+                                            @if($errors->has('category_meta_description'))
+                                                <span id="category_meta_description_err"
+                                                      style="color: red">{{$errors->first('category_meta_description')}}</span>
+                                            @endif
+                                        </div>
+                                        <!-- /.form-group -->
+                                    @endif
 
                                 </div>
                                 <!-- /.col -->
@@ -177,58 +214,59 @@
                                                 <span class="input-group-text" id="">Upload</span>
                                             </div>
                                         </div>
+
                                     </div>
-                                    <!-- /.form-group -->
-                                    <div class="form-group">
-                                        <label for="category_slug">Category Slug</label>
-                                        <input name="category_slug" id="category_slug"
-                                               type="text" class="form-control"
-                                               @if(!empty($categoryData->slug))
-                                               value="{{$categoryData->slug}}"
-                                               @else
-                                               value="{{old('slug')}}"
-                                               @endif
-                                               placeholder="Enter category slug">
-                                        @if($errors->has('category_slug'))
-                                            <span id="category_slug_err"
-                                                  style="color: red">{{$errors->first('category_slug')}}</span>
-                                        @endif
-                                    </div>
-                                    <!-- /.form-group -->
-                                    <div class="form-group">
-                                        <label for="category_meta_title">Category Meta Title</label>
-                                        <textarea type="text" class="form-control"
-                                                  name="category_meta_title" id="category_meta_title"
-                                                  placeholder="Enter category meta title">
-                                            @if(!empty($categoryData->meta_title))
-                                                {{$categoryData->meta_title}}
-                                            @else
-                                                {{old('meta_title')}}
+
+                                    @if(!empty($categoryData->category_image))
+                                        <div class="form-group">
+                                            <div class="col col-9 mx-auto mb-4 border border-dark">
+                                                <img class="mx-auto my-auto" style="width: 500px"
+                                                     src="{{asset('images/category_images/category_photos_'.$categoryData->category_image)}}">
+                                            </div>
+                                            <div class="col col-3 mx-auto my-auto">
+                                                <a class="col mx-auto my-auto btn btn-danger text-white"
+
+                                                   href="{{route('admin.categories.deleteCategoryImage',$categoryData->id)}}"><i
+                                                        class="fas fa-trash-alt"></i> Delete Image</a>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="form-group">
+                                            <label for="category_meta_keyword">Category Meta Keywords </label>
+                                            <textarea type="text" class="form-control"
+                                                      name="category_meta_keywords" id="category_meta_keywords"
+                                                      placeholder="Enter category meta keywords">@if(!empty($categoryData->meta_keywords)){{$categoryData->meta_keywords}}@else{{old('category_meta_keywords')}}@endif</textarea>
+                                            @if($errors->has('category_meta_keyword'))
+                                                <span id="category_meta_keyword_err"
+                                                      style="color: red">{{$errors->first('category_meta_keyword')}}</span>
                                             @endif
-                                        </textarea>
-                                        @if($errors->has('category_meta_title'))
-                                            <span id="category_meta_title_err"
-                                                  style="color: red">{{$errors->first('category_meta_title')}}</span>
-                                        @endif
-                                    </div>
-                                    <!-- /.form-group -->
-                                    <div class="form-group">
-                                        <label for="category_meta_keyword">Category Meta Keywords </label>
-                                        <textarea type="text" class="form-control"
-                                                  name="category_meta_keywords" id="category_meta_keywords"
-                                                  placeholder="Enter category meta keywords">
-                                            @if(!empty($categoryData->meta_keywords))
-                                                {{$categoryData->meta_keywords}}
-                                            @else
-                                                {{old('category_meta_keywords')}}
+                                        </div>
+                                        <!-- /.form-group -->
+                                        <div class="form-group">
+                                            <label for="category_description">Category Description</label>
+                                            <textarea name="category_description" id="category_description"
+                                                      type="text" class="form-control"
+                                                      placeholder="Enter category description">@if(!empty($categoryData->description)){{$categoryData->description}}@else{{old('category_description')}}@endif</textarea>
+                                            @if($errors->has('category_description'))
+                                                <span id="category_description_err"
+                                                      style="color: red">{{$errors->first('category_description')}}</span>
                                             @endif
-                                        </textarea>
-                                        @if($errors->has('category_meta_keyword'))
-                                            <span id="category_meta_keyword_err"
-                                                  style="color: red">{{$errors->first('category_meta_keyword')}}</span>
-                                        @endif
-                                    </div>
-                                    <!-- /.form-group -->
+                                        </div>
+                                        <!-- /.form-group -->
+                                        <div class="form-group">
+                                            <label for="category_meta_description">Category Meta Description </label>
+                                            <textarea name="category_meta_description" id="category_meta_description"
+                                                      type="text" class="form-control"
+                                                      placeholder="Enter category meta description">@if(!empty($categoryData->meta_description)){{$categoryData->meta_description}}@else{{old('category_meta_description')}}@endif</textarea>
+                                            @if($errors->has('category_meta_description'))
+                                                <span id="category_meta_description_err"
+                                                      style="color: red">{{$errors->first('category_meta_description')}}</span>
+                                            @endif
+                                        </div>
+                                        <!-- /.form-group -->
+                                @endif
+
+                                <!-- /.form-group -->
                                 </div>
                                 <!-- /.col -->
                             </div>
